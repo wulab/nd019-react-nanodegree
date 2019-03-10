@@ -5,9 +5,11 @@
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "source-map-explorer": "^1.7.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -25,11 +27,11 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@storybook/react": "^5.0.1",
+    "@babel/core": "^7.3.4",
     "@storybook/addon-actions": "^5.0.1",
     "@storybook/addon-links": "^5.0.1",
     "@storybook/addons": "^5.0.1",
-    "@babel/core": "^7.3.4",
+    "@storybook/react": "^5.0.1",
     "babel-loader": "^8.0.5"
   }
 }
