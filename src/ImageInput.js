@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const readFileAsDataURL = file =>
   new Promise(resolve => {
@@ -17,7 +17,7 @@ const resizeImage = (imageURL, canvas, maxHeight) =>
     const image = new Image();
 
     image.onload = () => {
-      const context = canvas.getContext("2d");
+      const context = canvas.getContext('2d');
 
       if (image.height > maxHeight) {
         image.width *= maxHeight / image.height;
@@ -30,7 +30,7 @@ const resizeImage = (imageURL, canvas, maxHeight) =>
 
       context.drawImage(image, 0, 0, image.width, image.height);
 
-      resolve(canvas.toDataURL("image/jpeg"));
+      resolve(canvas.toDataURL('image/jpeg'));
     };
 
     image.src = imageURL;
@@ -48,7 +48,7 @@ class ImageInput extends React.Component {
   };
 
   state = {
-    value: ""
+    value: ''
   };
 
   handleFileChange = event => {
@@ -63,21 +63,21 @@ class ImageInput extends React.Component {
         );
       });
     } else {
-      this.setState({ value: "" });
+      this.setState({ value: '' });
     }
   };
 
   handleFormReset = () => {
-    this.setState({ value: "" });
+    this.setState({ value: '' });
   };
 
   componentDidMount() {
-    this.canvas = document.createElement("canvas");
-    this.fileInput.form.addEventListener("reset", this.handleFormReset);
+    this.canvas = document.createElement('canvas');
+    this.fileInput.form.addEventListener('reset', this.handleFormReset);
   }
 
   componentWillUnmount() {
-    this.fileInput.form.removeEventListener("reset", this.handleFormReset);
+    this.fileInput.form.removeEventListener('reset', this.handleFormReset);
   }
 
   render() {
@@ -85,14 +85,14 @@ class ImageInput extends React.Component {
     const { value } = this.state;
 
     const style = {
-      position: "relative"
+      position: 'relative'
     };
 
     if (value) {
       style.backgroundImage = `url("${value}")`;
-      style.backgroundRepeat = "no-repeat";
-      style.backgroundPosition = "center";
-      style.backgroundSize = "cover";
+      style.backgroundRepeat = 'no-repeat';
+      style.backgroundPosition = 'center';
+      style.backgroundSize = 'cover';
     }
 
     return (
@@ -103,11 +103,11 @@ class ImageInput extends React.Component {
           type="file"
           onChange={this.handleFileChange}
           style={{
-            position: "absolute",
+            position: 'absolute',
             top: 0,
             left: 0,
-            width: "100%",
-            height: "100%",
+            width: '100%',
+            height: '100%',
             opacity: 0
           }}
         />
