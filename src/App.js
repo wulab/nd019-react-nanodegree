@@ -48,10 +48,13 @@ class App extends Component {
 
   // The body of arrow function shares the same `this` as the code that surrounds them
   // https://babeljs.io/blog/2015/07/07/react-on-es6-plus#arrow-functions
-  removeContact = contact =>
-    this.setState(currentState => ({
-      contacts: currentState.contacts.filter(c => c.id !== contact.id)
-    }));
+  removeContact = contact => {
+    ContactsAPI.remove(contact).then(() =>
+      this.setState(currentState => ({
+        contacts: currentState.contacts.filter(c => c.id !== contact.id)
+      }))
+    );
+  };
 
   render() {
     return (
