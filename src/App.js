@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ListContacts from './ListContacts';
 import * as ContactsAPI from './utils/ContactsAPI';
+import CreateContact from './CreateContact';
 
 class App extends Component {
   // https://reactjs.org/docs/react-component.html#constructor
@@ -39,7 +40,8 @@ class App extends Component {
 
   // https://babeljs.io/blog/2015/07/07/react-on-es6-plus#property-initializers
   state = {
-    contacts: []
+    contacts: [],
+    screen: 'list'
   };
 
   componentDidMount() {
@@ -59,10 +61,13 @@ class App extends Component {
   render() {
     return (
       <div>
-        <ListContacts
-          contacts={this.state.contacts}
-          onRemoveContact={this.removeContact}
-        />
+        {this.state.screen === 'list' && (
+          <ListContacts
+            contacts={this.state.contacts}
+            onRemoveContact={this.removeContact}
+          />
+        )}
+        {this.state.screen === 'create' && <CreateContact />}
       </div>
     );
   }
