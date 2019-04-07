@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import ListContacts from './ListContacts';
+import { Route } from 'react-router-dom';
 import * as ContactsAPI from './utils/ContactsAPI';
 import CreateContact from './CreateContact';
+import ListContacts from './ListContacts';
 
 class App extends Component {
   // https://reactjs.org/docs/react-component.html#constructor
@@ -40,8 +41,7 @@ class App extends Component {
 
   // https://babeljs.io/blog/2015/07/07/react-on-es6-plus#property-initializers
   state = {
-    contacts: [],
-    screen: 'list'
+    contacts: []
   };
 
   componentDidMount() {
@@ -61,14 +61,17 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.state.screen === 'list' && (
-          <ListContacts
-            contacts={this.state.contacts}
-            onRemoveContact={this.removeContact}
-            onNavigate={() => this.setState({ screen: 'create' })}
-          />
-        )}
-        {this.state.screen === 'create' && <CreateContact />}
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <ListContacts
+              contacts={this.state.contacts}
+              onRemoveContact={this.removeContact}
+            />
+          )}
+        />
+        <Route path="/create" component={CreateContact} />
       </div>
     );
   }
