@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListContacts from './ListContacts';
+import * as ContactsAPI from './utils/ContactsAPI';
 
 class App extends Component {
   // https://reactjs.org/docs/react-component.html#constructor
@@ -38,27 +39,12 @@ class App extends Component {
 
   // https://babeljs.io/blog/2015/07/07/react-on-es6-plus#property-initializers
   state = {
-    contacts: [
-      {
-        id: 'karen',
-        name: 'Karen Isgrigg',
-        handle: '@karenisgrigg',
-        avatarURL: 'http://localhost:5001/karen.jpg'
-      },
-      {
-        id: 'richard',
-        name: 'Richard Kalehoff',
-        handle: '@richardkalehoff',
-        avatarURL: 'http://localhost:5001/richard.jpg'
-      },
-      {
-        id: 'tyler',
-        name: 'Tyler McGinnis',
-        handle: '@tylermcginnis',
-        avatarURL: 'http://localhost:5001/tyler.jpg'
-      }
-    ]
+    contacts: []
   };
+
+  componentDidMount() {
+    ContactsAPI.getAll().then(contacts => this.setState({ contacts }));
+  }
 
   // The body of arrow function shares the same `this` as the code that surrounds them
   // https://babeljs.io/blog/2015/07/07/react-on-es6-plus#arrow-functions
