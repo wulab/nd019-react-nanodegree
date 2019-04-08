@@ -51,9 +51,17 @@ class App extends Component {
   // The body of arrow function shares the same `this` as the code that surrounds them
   // https://babeljs.io/blog/2015/07/07/react-on-es6-plus#arrow-functions
   removeContact = contact => {
-    ContactsAPI.remove(contact).then(() =>
+    ContactsAPI.remove(contact).then(contact =>
       this.setState(currentState => ({
         contacts: currentState.contacts.filter(c => c.id !== contact.id)
+      }))
+    );
+  };
+
+  createContact = contact => {
+    ContactsAPI.create(contact).then(contact =>
+      this.setState(currentState => ({
+        contacts: currentState.contacts.concat([contact])
       }))
     );
   };
@@ -71,7 +79,17 @@ class App extends Component {
             />
           )}
         />
-        <Route path="/create" component={CreateContact} />
+        <Route
+          path="/create"
+          render={({ history }) => (
+            <CreateContact
+              onCreateContact={contact => {
+                this.createContact(contact);
+                history.push('/');
+              }}
+            />
+          )}
+        />
       </div>
     );
   }
