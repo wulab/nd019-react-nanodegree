@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "clone": "^2.1.1",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "es6-error": "^4.0.2",
+    "express": "^4.15.2",
+    "invariant": "^2.2.2",
+    "isomorphic-fetch": "^2.2.1",
+    "lru-cache": "^4.1.0",
+    "morgan": "^1.8.1",
+    "queue": "^4.2.1",
+    "xml2js": "^0.4.17"
+  }
+}
