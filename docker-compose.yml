@@ -4,6 +4,8 @@ services:
   books-api:
     build: ./src/reactnd-books-api
     init: true
-    env_file: .env.local
+    env_file:
+      - .env
+      - .env.local
     ports:
       - '5001:5001'
