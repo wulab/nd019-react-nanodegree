@@ -5,12 +5,18 @@ class Bookshelf extends Component {
   render() {
     return (
       <div className="bookshelf">
-        <h2 className="bookshelf-title">Currently Reading</h2>
+        <h2 className="bookshelf-title">{this.props.title}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            <li>
-              <Book />
-            </li>
+            {this.props.books.map(book => (
+              <li key={book.title}>
+                <Book
+                  title={book.title}
+                  authors={book.authors}
+                  cover={book.cover}
+                />
+              </li>
+            ))}
           </ol>
         </div>
       </div>

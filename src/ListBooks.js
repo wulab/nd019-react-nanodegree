@@ -10,9 +10,22 @@ class ListBooks extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <Bookshelf />
-            <Bookshelf />
-            <Bookshelf />
+            <Bookshelf
+              title="Currently Reading"
+              books={this.props.books.filter(
+                book => book.category === 'currentlyReading'
+              )}
+            />
+            <Bookshelf
+              title="Want to Read"
+              books={this.props.books.filter(
+                book => book.category === 'wantToRead'
+              )}
+            />
+            <Bookshelf
+              title="Read"
+              books={this.props.books.filter(book => book.category === 'read')}
+            />
           </div>
         </div>
       </div>
