@@ -29,10 +29,16 @@ class App extends Component {
     ]
   };
 
+  moveBook = (book, category) => {
+    const books = this.state.books.filter(b => b.title !== book.title);
+    books.push({ ...book, category: category });
+    this.setState({ books });
+  };
+
   render() {
     return (
       <div className="app">
-        <ListBooks books={this.state.books} />
+        <ListBooks books={this.state.books} onBookMove={this.moveBook} />
       </div>
     );
   }

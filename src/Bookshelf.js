@@ -13,7 +13,11 @@ class Bookshelf extends Component {
                 <Book
                   title={book.title}
                   authors={book.authors}
+                  category={book.category}
                   cover={book.cover}
+                  onCategoryChange={category =>
+                    this.props.onBookMove(book, category)
+                  }
                 />
               </li>
             ))}
