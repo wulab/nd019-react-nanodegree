@@ -177,7 +177,11 @@ const getAll = token => {
 
 const update = (token, bookId, shelf) =>
   new Promise(resolve => {
+    const book = lruCache.get(bookId);
     const data = getData(token);
+
+    book.shelf = shelf;
+    lruCache.set(bookId, book);
 
     Object.keys(data).forEach(s => {
       if (s === shelf) {
