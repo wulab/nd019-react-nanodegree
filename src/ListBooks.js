@@ -13,21 +13,21 @@ class ListBooks extends Component {
             <Bookshelf
               title="Currently Reading"
               books={this.props.books.filter(
-                book => book.category === 'currentlyReading'
+                book => book.shelf === 'currentlyReading'
               )}
-              onBookMove={this.props.onBookMove}
+              onShelfChange={this.props.onShelfChange}
             />
             <Bookshelf
               title="Want to Read"
               books={this.props.books.filter(
-                book => book.category === 'wantToRead'
+                book => book.shelf === 'wantToRead'
               )}
-              onBookMove={this.props.onBookMove}
+              onShelfChange={this.props.onShelfChange}
             />
             <Bookshelf
               title="Read"
-              books={this.props.books.filter(book => book.category === 'read')}
-              onBookMove={this.props.onBookMove}
+              books={this.props.books.filter(book => book.shelf === 'read')}
+              onShelfChange={this.props.onShelfChange}
             />
           </div>
         </div>

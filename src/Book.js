@@ -10,15 +10,13 @@ class Book extends Component {
             style={{
               width: 128,
               height: 188,
-              backgroundImage: `url("${this.props.cover}")`
+              backgroundImage: `url("${this.props.thumbnail}")`
             }}
           />
           <div className="book-shelf-changer">
             <select
-              value={this.props.category}
-              onChange={event =>
-                this.props.onCategoryChange(event.target.value)
-              }
+              value={this.props.shelf}
+              onChange={event => this.props.onShelfChange(event.target.value)}
             >
               <option value="move" disabled>
                 Move to...
@@ -31,7 +29,7 @@ class Book extends Component {
           </div>
         </div>
         <div className="book-title">{this.props.title}</div>
-        <div className="book-authors">{this.props.authors}</div>
+        <div className="book-authors">{this.props.authors.join(', ')}</div>
       </div>
     );
   }
