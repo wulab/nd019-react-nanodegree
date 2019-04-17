@@ -44,17 +44,20 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.results.map(book => (
-              <li key={book.id}>
-                <Book
-                  title={book.title}
-                  authors={book.authors}
-                  shelf={book.shelf}
-                  thumbnail={book.imageLinks && book.imageLinks.thumbnail}
-                  onShelfChange={shelf => this.props.onShelfChange(book, shelf)}
-                />
-              </li>
-            ))}
+            {Array.isArray(this.state.results) &&
+              this.state.results.map(book => (
+                <li key={book.id}>
+                  <Book
+                    title={book.title}
+                    authors={book.authors}
+                    shelf={book.shelf}
+                    thumbnail={book.imageLinks && book.imageLinks.thumbnail}
+                    onShelfChange={shelf =>
+                      this.props.onShelfChange(book, shelf)
+                    }
+                  />
+                </li>
+              ))}
           </ol>
         </div>
       </div>
