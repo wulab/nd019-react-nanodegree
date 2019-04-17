@@ -14,7 +14,7 @@ class Bookshelf extends Component {
                   title={book.title}
                   authors={book.authors}
                   shelf={book.shelf}
-                  thumbnail={book.imageLinks.thumbnail}
+                  thumbnail={book.imageLinks && book.imageLinks.thumbnail}
                   onShelfChange={shelf => this.props.onShelfChange(book, shelf)}
                 />
               </li>
