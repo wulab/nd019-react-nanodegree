@@ -2,8 +2,35 @@
 <html lang="en">
   <head>
     <title>Udacity Todos Goals</title>
+    <link rel="stylesheet" href="milligram.css" />
   </head>
   <body>
+    <div class="container">
+      <div class="row">
+        <div class="column column-50">
+          <h1>Todo List</h1>
+          <ul id="todos"></ul>
+          <form>
+            <fieldset>
+              <input type="text" placeholder="Add Todo" id="todoInput" />
+              <button class="button" id="todoButton">Add Todo</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column column-50">
+          <h1>Goals</h1>
+          <ul id="goals"></ul>
+          <form>
+            <fieldset>
+              <input type="text" placeholder="Add Goal" id="goalInput" />
+              <button class="button" id="goalButton">Add Goal</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>
