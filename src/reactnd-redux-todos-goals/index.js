@@ -47,7 +47,7 @@ function todos(state = [], action) {
   }
 }
 
-function goals(state, action) {
+function goals(state = [], action) {
   switch (action.type) {
     case 'ADD_GOAL':
       return state.concat([action.goal]);
@@ -58,7 +58,15 @@ function goals(state, action) {
   }
 }
 
-const store = createStore(todos);
+function app(state = {}, action) {
+  return {
+    todos: todos(state.todos, action),
+    goals: goals(state.goals, action)
+  };
+}
+
+// Passing the root reducer to our store since our createStore function can only take one reducer.
+const store = createStore(app);
 
 store.subscribe(() => {
   console.log(`The new state is ${JSON.stringify(store.getState())}`);
@@ -89,5 +97,26 @@ store.dispatch({
 
 store.dispatch({
   type: 'REMOVE_TODO',
+  id: 0
+});
+
+store.dispatch({
+  type: 'ADD_GOAL',
+  goal: {
+    id: 0,
+    name: 'Learn Redux'
+  }
+});
+
+store.dispatch({
+  type: 'ADD_GOAL',
+  goal: {
+    id: 1,
+    name: 'Lose 20 pounds'
+  }
+});
+
+store.dispatch({
+  type: 'REMOVE_GOAL',
   id: 0
 });
