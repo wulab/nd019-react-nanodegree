@@ -113,46 +113,87 @@ store.subscribe(() => {
   console.log(`The new state is ${JSON.stringify(store.getState())}`);
 });
 
-store.dispatch(
-  addTodoAction({
-    todo: {
-      id: 0,
-      name: 'Learn Redux',
+// store.dispatch(
+//   addTodoAction({
+//     todo: {
+//       id: 0,
+//       name: 'Learn Redux',
+//       complete: false
+//     }
+//   })
+// );
+
+// store.dispatch(
+//   addTodoAction({
+//     todo: {
+//       id: 1,
+//       name: 'Read a Book',
+//       complete: false
+//     }
+//   })
+// );
+
+// store.dispatch(toggleTodoAction(1));
+
+// store.dispatch(removeTodoAction(0));
+
+// store.dispatch(
+//   addGoalAction({
+//     goal: {
+//       id: 0,
+//       name: 'Learn Redux'
+//     }
+//   })
+// );
+
+// store.dispatch(
+//   addGoalAction({
+//     goal: {
+//       id: 1,
+//       name: 'Lose 20 pounds'
+//     }
+//   })
+// );
+
+// store.dispatch(removeGoalAction(0));
+
+function generateId() {
+  return Math.random()
+    .toString(36)
+    .substr(2, 8);
+}
+
+// DOM code
+function addTodo(event) {
+  event.preventDefault();
+
+  const input = document.getElementById('todoInput');
+  const name = input.value;
+  input.value = '';
+
+  store.dispatch(
+    addTodoAction({
+      name,
+      id: generateId(),
       complete: false
-    }
-  })
-);
+    })
+  );
+}
 
-store.dispatch(
-  addTodoAction({
-    todo: {
-      id: 1,
-      name: 'Read a Book',
-      complete: false
-    }
-  })
-);
+function addGoal(event) {
+  event.preventDefault();
 
-store.dispatch(toggleTodoAction(1));
+  const input = document.getElementById('goalInput');
+  const name = input.value;
+  input.value = '';
 
-store.dispatch(removeTodoAction(0));
+  store.dispatch(
+    addGoalAction({
+      name,
+      id: generateId()
+    })
+  );
+}
 
-store.dispatch(
-  addGoalAction({
-    goal: {
-      id: 0,
-      name: 'Learn Redux'
-    }
-  })
-);
-
-store.dispatch(
-  addGoalAction({
-    goal: {
-      id: 1,
-      name: 'Lose 20 pounds'
-    }
-  })
-);
-
-store.dispatch(removeGoalAction(0));
+document.getElementById('todoButton').addEventListener('click', addTodo);
+document.getElementById('goalButton').addEventListener('click', addGoal);
