@@ -110,7 +110,13 @@ function app(state = {}, action) {
 const store = createStore(app);
 
 store.subscribe(() => {
-  console.log(`The new state is ${JSON.stringify(store.getState())}`);
+  const { todos, goals } = store.getState();
+
+  document.getElementById('todos').innerHTML = '';
+  document.getElementById('goals').innerHTML = '';
+
+  todos.forEach(addTodoToDOM);
+  goals.forEach(addGoalToDOM);
 });
 
 // store.dispatch(
@@ -197,3 +203,21 @@ function addGoal(event) {
 
 document.getElementById('todoButton').addEventListener('click', addTodo);
 document.getElementById('goalButton').addEventListener('click', addGoal);
+
+function addTodoToDOM(todo) {
+  const text = document.createTextNode(todo.name);
+  const li = document.createElement('li');
+  const ul = document.getElementById('todos');
+
+  li.appendChild(text);
+  ul.appendChild(li);
+}
+
+function addGoalToDOM(goal) {
+  const text = document.createTextNode(goal.name);
+  const li = document.createElement('li');
+  const ul = document.getElementById('goals');
+
+  li.appendChild(text);
+  ul.appendChild(li);
+}
