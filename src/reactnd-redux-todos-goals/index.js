@@ -1,36 +1,3 @@
-// Library code
-function createStore(reducer) {
-  // The store should have four parts
-  // 1. The state
-  // 2. Get the state
-  // 3. Listen to changes on the state
-  // 4. Update the state
-  let state;
-  let listeners = [];
-
-  const getState = () => state;
-
-  const subscribe = listener => {
-    listeners.push(listener);
-    return () => unsubscribe(listener);
-  };
-
-  const unsubscribe = listener => {
-    listeners = listeners.filter(l => l !== listener);
-  };
-
-  const dispatch = action => {
-    state = reducer(state, action);
-    listeners.forEach(listener => listener());
-  };
-
-  return {
-    getState,
-    subscribe,
-    dispatch
-  };
-}
-
 // App code
 const ADD_TODO = 'ADD_TODO';
 const REMOVE_TODO = 'REMOVE_TODO';
@@ -99,15 +66,8 @@ function goals(state = [], action) {
   }
 }
 
-function app(state = {}, action) {
-  return {
-    todos: todos(state.todos, action),
-    goals: goals(state.goals, action)
-  };
-}
-
-// Passing the root reducer to our store since our createStore function can only take one reducer.
-const store = createStore(app);
+const app = Redux.combineReducers({ todos, goals });
+const store = Redux.createStore(app);
 
 store.subscribe(() => {
   const { todos, goals } = store.getState();
@@ -118,50 +78,6 @@ store.subscribe(() => {
   todos.forEach(addTodoToDOM);
   goals.forEach(addGoalToDOM);
 });
-
-// store.dispatch(
-//   addTodoAction({
-//     todo: {
-//       id: 0,
-//       name: 'Learn Redux',
-//       complete: false
-//     }
-//   })
-// );
-
-// store.dispatch(
-//   addTodoAction({
-//     todo: {
-//       id: 1,
-//       name: 'Read a Book',
-//       complete: false
-//     }
-//   })
-// );
-
-// store.dispatch(toggleTodoAction(1));
-
-// store.dispatch(removeTodoAction(0));
-
-// store.dispatch(
-//   addGoalAction({
-//     goal: {
-//       id: 0,
-//       name: 'Learn Redux'
-//     }
-//   })
-// );
-
-// store.dispatch(
-//   addGoalAction({
-//     goal: {
-//       id: 1,
-//       name: 'Lose 20 pounds'
-//     }
-//   })
-// );
-
-// store.dispatch(removeGoalAction(0));
 
 function generateId() {
   return Math.random()
