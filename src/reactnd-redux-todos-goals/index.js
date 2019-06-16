@@ -186,11 +186,14 @@ function addTodo(event) {
   );
 }
 
-function toggleTodo(event) {
+function toggleTodo(id, event) {
   event.preventDefault();
-
-  const id = event.target.id;
   store.dispatch(toggleTodoAction(id));
+}
+
+function removeTodo(id, event) {
+  event.preventDefault();
+  store.dispatch(removeTodoAction(id));
 }
 
 function addGoal(event) {
@@ -208,27 +211,45 @@ function addGoal(event) {
   );
 }
 
+function removeGoal(id, event) {
+  event.preventDefault();
+  store.dispatch(removeGoalAction(id));
+}
+
 document.getElementById('todoButton').addEventListener('click', addTodo);
 document.getElementById('goalButton').addEventListener('click', addGoal);
 
 function addTodoToDOM(todo) {
   const text = document.createTextNode(todo.name);
+  const button = document.createElement('button');
   const li = document.createElement('li');
   const ul = document.getElementById('todos');
 
-  li.id = todo.id;
+  button.innerHTML = 'remove';
+  button.classList.add('button');
+  button.classList.add('button-clear');
+  button.addEventListener('click', removeTodo.bind(null, todo.id));
+
   li.style.textDecoration = todo.complete ? 'line-through' : 'none';
-  li.addEventListener('click', toggleTodo);
+  li.addEventListener('click', toggleTodo.bind(null, todo.id));
 
   li.appendChild(text);
+  li.appendChild(button);
   ul.appendChild(li);
 }
 
 function addGoalToDOM(goal) {
   const text = document.createTextNode(goal.name);
+  const button = document.createElement('button');
   const li = document.createElement('li');
   const ul = document.getElementById('goals');
 
+  button.innerHTML = 'remove';
+  button.classList.add('button');
+  button.classList.add('button-clear');
+  button.addEventListener('click', removeGoal.bind(null, goal.id));
+
   li.appendChild(text);
+  li.appendChild(button);
   ul.appendChild(li);
 }
