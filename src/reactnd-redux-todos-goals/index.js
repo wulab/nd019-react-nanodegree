@@ -186,6 +186,13 @@ function addTodo(event) {
   );
 }
 
+function toggleTodo(event) {
+  event.preventDefault();
+
+  const id = event.target.id;
+  store.dispatch(toggleTodoAction(id));
+}
+
 function addGoal(event) {
   event.preventDefault();
 
@@ -208,6 +215,10 @@ function addTodoToDOM(todo) {
   const text = document.createTextNode(todo.name);
   const li = document.createElement('li');
   const ul = document.getElementById('todos');
+
+  li.id = todo.id;
+  li.style.textDecoration = todo.complete ? 'line-through' : 'none';
+  li.addEventListener('click', toggleTodo);
 
   li.appendChild(text);
   ul.appendChild(li);
