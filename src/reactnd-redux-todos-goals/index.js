@@ -77,11 +77,19 @@ function checker(store) {
         return alert("Nope. That's a bad idea.");
       }
 
+      if (action.type === ADD_TODO) {
+        alert("Don't forget to " + action.todo.name + '!');
+      }
+
       if (
         action.type === ADD_GOAL &&
         action.goal.name.toLowerCase().includes('bitcoin')
       ) {
         return alert("Nope. That's a bad idea.");
+      }
+
+      if (action.type === ADD_GOAL) {
+        alert("That's a great goal!");
       }
 
       return next(action);
