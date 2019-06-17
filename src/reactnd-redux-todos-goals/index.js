@@ -66,7 +66,29 @@ function goals(state = [], action) {
   }
 }
 
-const app = Redux.combineReducers({ todos, goals });
+function checkAndDispatch(store, action) {
+  if (
+    action.type === ADD_TODO &&
+    action.todo.name.toLowerCase().includes('bitcoin')
+  ) {
+    return alert("Nope. That's a bad idea.");
+  }
+
+  if (
+    action.type === ADD_GOAL &&
+    action.goal.name.toLowerCase().includes('bitcoin')
+  ) {
+    return alert("Nope. That's a bad idea.");
+  }
+
+  store.dispatch(action);
+}
+
+const app = Redux.combineReducers({
+  todos,
+  goals
+});
+
 const store = Redux.createStore(app);
 
 store.subscribe(() => {
@@ -93,7 +115,8 @@ function addTodo(event) {
   const name = input.value;
   input.value = '';
 
-  store.dispatch(
+  checkAndDispatch(
+    store,
     addTodoAction({
       name,
       id: generateId(),
@@ -104,12 +127,12 @@ function addTodo(event) {
 
 function toggleTodo(id, event) {
   event.preventDefault();
-  store.dispatch(toggleTodoAction(id));
+  checkAndDispatch(store, toggleTodoAction(id));
 }
 
 function removeTodo(id, event) {
   event.preventDefault();
-  store.dispatch(removeTodoAction(id));
+  checkAndDispatch(store, removeTodoAction(id));
 }
 
 function addGoal(event) {
@@ -119,7 +142,8 @@ function addGoal(event) {
   const name = input.value;
   input.value = '';
 
-  store.dispatch(
+  checkAndDispatch(
+    store,
     addGoalAction({
       name,
       id: generateId()
@@ -129,7 +153,7 @@ function addGoal(event) {
 
 function removeGoal(id, event) {
   event.preventDefault();
-  store.dispatch(removeGoalAction(id));
+  checkAndDispatch(store, removeGoalAction(id));
 }
 
 document.getElementById('todoButton').addEventListener('click', addTodo);
