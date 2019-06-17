@@ -66,22 +66,26 @@ function goals(state = [], action) {
   }
 }
 
-function checkAndDispatch(store, action) {
-  if (
-    action.type === ADD_TODO &&
-    action.todo.name.toLowerCase().includes('bitcoin')
-  ) {
-    return alert("Nope. That's a bad idea.");
-  }
+function checker(store) {
+  return function(next) {
+    return function(action) {
+      if (
+        action.type === ADD_TODO &&
+        action.todo.name.toLowerCase().includes('bitcoin')
+      ) {
+        return alert("Nope. That's a bad idea.");
+      }
 
-  if (
-    action.type === ADD_GOAL &&
-    action.goal.name.toLowerCase().includes('bitcoin')
-  ) {
-    return alert("Nope. That's a bad idea.");
-  }
+      if (
+        action.type === ADD_GOAL &&
+        action.goal.name.toLowerCase().includes('bitcoin')
+      ) {
+        return alert("Nope. That's a bad idea.");
+      }
 
-  store.dispatch(action);
+      return next(action);
+    };
+  };
 }
 
 const app = Redux.combineReducers({
@@ -89,7 +93,9 @@ const app = Redux.combineReducers({
   goals
 });
 
-const store = Redux.createStore(app);
+const middlewares = Redux.applyMiddleware(checker);
+
+const store = Redux.createStore(app, middlewares);
 
 store.subscribe(() => {
   const { todos, goals } = store.getState();
@@ -115,8 +121,7 @@ function addTodo(event) {
   const name = input.value;
   input.value = '';
 
-  checkAndDispatch(
-    store,
+  store.dispatch(
     addTodoAction({
       name,
       id: generateId(),
@@ -127,12 +132,12 @@ function addTodo(event) {
 
 function toggleTodo(id, event) {
   event.preventDefault();
-  checkAndDispatch(store, toggleTodoAction(id));
+  store.dispatch(toggleTodoAction(id));
 }
 
 function removeTodo(id, event) {
   event.preventDefault();
-  checkAndDispatch(store, removeTodoAction(id));
+  store.dispatch(removeTodoAction(id));
 }
 
 function addGoal(event) {
@@ -142,8 +147,7 @@ function addGoal(event) {
   const name = input.value;
   input.value = '';
 
-  checkAndDispatch(
-    store,
+  store.dispatch(
     addGoalAction({
       name,
       id: generateId()
@@ -153,7 +157,7 @@ function addGoal(event) {
 
 function removeGoal(id, event) {
   event.preventDefault();
-  checkAndDispatch(store, removeGoalAction(id));
+  store.dispatch(removeGoalAction(id));
 }
 
 document.getElementById('todoButton').addEventListener('click', addTodo);
