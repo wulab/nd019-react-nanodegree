@@ -66,6 +66,7 @@ function goals(state = [], action) {
   }
 }
 
+// Middleware code
 function checker(store) {
   return function(next) {
     return function(action) {
@@ -88,12 +89,28 @@ function checker(store) {
   };
 }
 
+function logger(store) {
+  return function(next) {
+    return function(action) {
+      console.group(action.type);
+      console.log('The action:', action);
+
+      const result = next(action);
+
+      console.log('The new state:', store.getState());
+      console.groupEnd();
+
+      return result;
+    };
+  };
+}
+
 const app = Redux.combineReducers({
   todos,
   goals
 });
 
-const middlewares = Redux.applyMiddleware(checker);
+const middlewares = Redux.applyMiddleware(checker, logger);
 
 const store = Redux.createStore(app, middlewares);
 
