@@ -3,35 +3,73 @@
   <head>
     <title>Udacity Todos Goals</title>
     <link rel="stylesheet" href="milligram.css" />
+    <script src="redux.js"></script>
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <script src="babel.js"></script>
+    <script src="index.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="column column-50">
-          <h1>Todo List</h1>
-          <ul id="todos"></ul>
-          <form>
-            <fieldset>
-              <input type="text" placeholder="Add Todo" id="todoInput" />
-              <button class="button" id="todoButton">Add Todo</button>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="column column-50">
-          <h1>Goals</h1>
-          <ul id="goals"></ul>
-          <form>
-            <fieldset>
-              <input type="text" placeholder="Add Goal" id="goalInput" />
-              <button class="button" id="goalButton">Add Goal</button>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-    </div>
-    <script src="redux.js"></script>
-    <script src="index.js"></script>
+    <div id="root"></div>
+    <script type="text/babel">
+      class Todos extends React.Component {
+        render() {
+          return (
+            <div>
+              <h1>Todo List</h1>
+              <ul id="todos" />
+              <form>
+                <fieldset>
+                  <input type="text" placeholder="Add Todo" id="todoInput" />
+                  <button className="button" id="todoButton">
+                    Add Todo
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+          );
+        }
+      }
+
+      class Goals extends React.Component {
+        render() {
+          return (
+            <div>
+              <h1>Goals</h1>
+              <ul id="goals" />
+              <form>
+                <fieldset>
+                  <input type="text" placeholder="Add Goal" id="goalInput" />
+                  <button className="button" id="goalButton">
+                    Add Goal
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+          );
+        }
+      }
+
+      class App extends React.Component {
+        render() {
+          return (
+            <div className="container">
+              <div className="row">
+                <div className="column column-50">
+                  <Todos />
+                </div>
+              </div>
+              <div className="row">
+                <div className="column column-50">
+                  <Goals />
+                </div>
+              </div>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
   </body>
 </html>
