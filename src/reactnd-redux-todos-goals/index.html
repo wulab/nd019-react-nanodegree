@@ -13,6 +13,21 @@
     <div id="root"></div>
     <script type="text/babel">
       class Todos extends React.Component {
+        addTodo = event => {
+          event.preventDefault();
+
+          const name = this.input.value;
+          this.input.value = '';
+
+          this.props.store.dispatch(
+            addTodoAction({
+              name,
+              complete: false,
+              id: generateId()
+            })
+          );
+        };
+
         render() {
           return (
             <div>
@@ -20,8 +35,12 @@
               <ul id="todos" />
               <form>
                 <fieldset>
-                  <input type="text" placeholder="Add Todo" id="todoInput" />
-                  <button className="button" id="todoButton">
+                  <input
+                    type="text"
+                    placeholder="Add Todo"
+                    ref={element => (this.input = element)}
+                  />
+                  <button className="button" onClick={this.addTodo}>
                     Add Todo
                   </button>
                 </fieldset>
@@ -56,12 +75,12 @@
             <div className="container">
               <div className="row">
                 <div className="column column-50">
-                  <Todos />
+                  <Todos store={this.props.store} />
                 </div>
               </div>
               <div className="row">
                 <div className="column column-50">
-                  <Goals />
+                  <Goals store={this.props.store} />
                 </div>
               </div>
             </div>
@@ -69,7 +88,7 @@
         }
       }
 
-      ReactDOM.render(<App />, document.getElementById('root'));
+      ReactDOM.render(<App store={store} />, document.getElementById('root'));
     </script>
   </body>
 </html>
