@@ -113,25 +113,6 @@ function logger(store) {
   };
 }
 
-const app = Redux.combineReducers({
-  todos,
-  goals
-});
-
-const middlewares = Redux.applyMiddleware(checker, logger);
-
-const store = Redux.createStore(app, middlewares);
-
-store.subscribe(() => {
-  const { todos, goals } = store.getState();
-
-  document.getElementById('todos').innerHTML = '';
-  document.getElementById('goals').innerHTML = '';
-
-  todos.forEach(addTodoToDOM);
-  goals.forEach(addGoalToDOM);
-});
-
 function generateId() {
   return Math.random()
     .toString(36)
@@ -185,9 +166,6 @@ function removeGoal(id, event) {
   store.dispatch(removeGoalAction(id));
 }
 
-document.getElementById('todoButton').addEventListener('click', addTodo);
-document.getElementById('goalButton').addEventListener('click', addGoal);
-
 function addTodoToDOM(todo) {
   const text = document.createTextNode(todo.name);
   const button = document.createElement('button');
@@ -222,3 +200,26 @@ function addGoalToDOM(goal) {
   li.appendChild(button);
   ul.appendChild(li);
 }
+
+// Main code
+const app = Redux.combineReducers({
+  todos,
+  goals
+});
+
+const middlewares = Redux.applyMiddleware(checker, logger);
+
+const store = Redux.createStore(app, middlewares);
+
+// store.subscribe(() => {
+//   const { todos, goals } = store.getState();
+
+//   document.getElementById('todos').innerHTML = '';
+//   document.getElementById('goals').innerHTML = '';
+
+//   todos.forEach(addTodoToDOM);
+//   goals.forEach(addGoalToDOM);
+// });
+
+// document.getElementById('todoButton').addEventListener('click', addTodo);
+// document.getElementById('goalButton').addEventListener('click', addGoal);
