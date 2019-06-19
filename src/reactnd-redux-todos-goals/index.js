@@ -66,6 +66,12 @@ function goals(state = [], action) {
   }
 }
 
+function generateId() {
+  return Math.random()
+    .toString(36)
+    .substr(2, 8);
+}
+
 // Middleware code
 function checker(store) {
   return function(next) {
@@ -113,94 +119,6 @@ function logger(store) {
   };
 }
 
-function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 8);
-}
-
-// DOM code
-function addTodo(event) {
-  event.preventDefault();
-
-  const input = document.getElementById('todoInput');
-  const name = input.value;
-  input.value = '';
-
-  store.dispatch(
-    addTodoAction({
-      name,
-      id: generateId(),
-      complete: false
-    })
-  );
-}
-
-function toggleTodo(id, event) {
-  event.preventDefault();
-  store.dispatch(toggleTodoAction(id));
-}
-
-function removeTodo(id, event) {
-  event.preventDefault();
-  store.dispatch(removeTodoAction(id));
-}
-
-function addGoal(event) {
-  event.preventDefault();
-
-  const input = document.getElementById('goalInput');
-  const name = input.value;
-  input.value = '';
-
-  store.dispatch(
-    addGoalAction({
-      name,
-      id: generateId()
-    })
-  );
-}
-
-function removeGoal(id, event) {
-  event.preventDefault();
-  store.dispatch(removeGoalAction(id));
-}
-
-function addTodoToDOM(todo) {
-  const text = document.createTextNode(todo.name);
-  const button = document.createElement('button');
-  const li = document.createElement('li');
-  const ul = document.getElementById('todos');
-
-  button.innerHTML = 'remove';
-  button.classList.add('button');
-  button.classList.add('button-clear');
-  button.addEventListener('click', removeTodo.bind(null, todo.id));
-
-  li.style.textDecoration = todo.complete ? 'line-through' : 'none';
-  li.addEventListener('click', toggleTodo.bind(null, todo.id));
-
-  li.appendChild(text);
-  li.appendChild(button);
-  ul.appendChild(li);
-}
-
-function addGoalToDOM(goal) {
-  const text = document.createTextNode(goal.name);
-  const button = document.createElement('button');
-  const li = document.createElement('li');
-  const ul = document.getElementById('goals');
-
-  button.innerHTML = 'remove';
-  button.classList.add('button');
-  button.classList.add('button-clear');
-  button.addEventListener('click', removeGoal.bind(null, goal.id));
-
-  li.appendChild(text);
-  li.appendChild(button);
-  ul.appendChild(li);
-}
-
 // Main code
 const app = Redux.combineReducers({
   todos,
@@ -210,16 +128,3 @@ const app = Redux.combineReducers({
 const middlewares = Redux.applyMiddleware(checker, logger);
 
 const store = Redux.createStore(app, middlewares);
-
-// store.subscribe(() => {
-//   const { todos, goals } = store.getState();
-
-//   document.getElementById('todos').innerHTML = '';
-//   document.getElementById('goals').innerHTML = '';
-
-//   todos.forEach(addTodoToDOM);
-//   goals.forEach(addGoalToDOM);
-// });
-
-// document.getElementById('todoButton').addEventListener('click', addTodo);
-// document.getElementById('goalButton').addEventListener('click', addGoal);

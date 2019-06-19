@@ -17,7 +17,16 @@
           <ul>
             {props.items.map(item => (
               <li key={item.id}>
-                <span>{item.name}</span>
+                <span
+                  style={{
+                    textDecoration: item.complete ? 'line-through' : 'none'
+                  }}
+                  onClick={event =>
+                    props.onItemToggle && props.onItemToggle(item, event)
+                  }
+                >
+                  {item.name}
+                </span>
                 <button
                   className="button button-clear"
                   onClick={event => props.onItemRemove(item, event)}
@@ -51,11 +60,20 @@
           this.props.store.dispatch(removeTodoAction(todo.id));
         };
 
+        toggleTodo = (todo, event) => {
+          event.preventDefault();
+          this.props.store.dispatch(toggleTodoAction(todo.id));
+        };
+
         render() {
           return (
             <div>
               <h1>Todo List</h1>
-              <List items={this.props.todos} onItemRemove={this.removeTodo} />
+              <List
+                items={this.props.todos}
+                onItemRemove={this.removeTodo}
+                onItemToggle={this.toggleTodo}
+              />
               <form>
                 <fieldset>
                   <input
