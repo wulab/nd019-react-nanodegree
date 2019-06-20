@@ -58,7 +58,14 @@
 
         removeTodo = (todo, event) => {
           event.preventDefault();
-          this.props.store.dispatch(removeTodoAction(todo.id));
+
+          const { store } = this.props;
+          store.dispatch(removeTodoAction(todo.id));
+
+          API.deleteTodo(todo.id).catch(() => {
+            alert('An error occurred. Try again.');
+            store.dispatch(addTodoAction(todo));
+          });
         };
 
         toggleTodo = (todo, event) => {
@@ -109,7 +116,14 @@
 
         removeGoal = (goal, event) => {
           event.preventDefault();
-          this.props.store.dispatch(removeGoalAction(goal.id));
+
+          const { store } = this.props;
+          store.dispatch(removeGoalAction(goal.id));
+
+          API.deleteGoal(goal.id).catch(() => {
+            alert('An error occurred. Try again.');
+            store.dispatch(addGoalAction(goal));
+          });
         };
 
         render() {
