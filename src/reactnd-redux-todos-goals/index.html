@@ -70,7 +70,14 @@
 
         toggleTodo = (todo, event) => {
           event.preventDefault();
-          this.props.store.dispatch(toggleTodoAction(todo.id));
+
+          const { store } = this.props;
+          store.dispatch(toggleTodoAction(todo.id));
+
+          API.saveTodoToggle(todo.id).catch(() => {
+            alert('An error occurred. Try again.');
+            store.dispatch(toggleTodoAction(todo.id));
+          });
         };
 
         render() {
