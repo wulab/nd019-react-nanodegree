@@ -13,17 +13,17 @@ function addTodoAction(todo) {
   };
 }
 
-function removeTodoAction(id) {
+function removeTodoAction(todo) {
   return {
     type: REMOVE_TODO,
-    id
+    id: todo.id
   };
 }
 
-function toggleTodoAction(id) {
+function toggleTodoAction(todo) {
   return {
     type: TOGGLE_TODO,
-    id
+    id: todo.id
   };
 }
 
@@ -34,10 +34,10 @@ function addGoalAction(goal) {
   };
 }
 
-function removeGoalAction(id) {
+function removeGoalAction(goal) {
   return {
     type: REMOVE_GOAL,
-    id
+    id: goal.id
   };
 }
 

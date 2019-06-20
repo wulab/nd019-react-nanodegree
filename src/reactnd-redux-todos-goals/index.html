@@ -60,7 +60,7 @@
           event.preventDefault();
 
           const { store } = this.props;
-          store.dispatch(removeTodoAction(todo.id));
+          store.dispatch(removeTodoAction(todo));
 
           API.deleteTodo(todo.id).catch(() => {
             alert('An error occurred. Try again.');
@@ -72,11 +72,11 @@
           event.preventDefault();
 
           const { store } = this.props;
-          store.dispatch(toggleTodoAction(todo.id));
+          store.dispatch(toggleTodoAction(todo));
 
           API.saveTodoToggle(todo.id).catch(() => {
             alert('An error occurred. Try again.');
-            store.dispatch(toggleTodoAction(todo.id));
+            store.dispatch(toggleTodoAction(todo));
           });
         };
 
@@ -125,7 +125,7 @@
           event.preventDefault();
 
           const { store } = this.props;
-          store.dispatch(removeGoalAction(goal.id));
+          store.dispatch(removeGoalAction(goal));
 
           API.deleteGoal(goal.id).catch(() => {
             alert('An error occurred. Try again.');
