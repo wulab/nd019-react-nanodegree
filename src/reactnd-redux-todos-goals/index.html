@@ -58,12 +58,7 @@
           event.preventDefault();
 
           const { store } = this.props;
-          store.dispatch(removeTodoAction(todo));
-
-          API.deleteTodo(todo.id).catch(() => {
-            alert('An error occurred. Try again.');
-            store.dispatch(addTodoAction(todo));
-          });
+          store.dispatch(asyncRemoveTodoAction(todo));
         };
 
         toggleTodo = (todo, event) => {

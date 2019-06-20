@@ -48,6 +48,17 @@ function receiveDataAction(data) {
   };
 }
 
+function asyncRemoveTodoAction(todo) {
+  return function(dispatch) {
+    dispatch(removeTodoAction(todo));
+
+    API.deleteTodo(todo.id).catch(() => {
+      alert('An error occurred. Try again.');
+      dispatch(addTodoAction(todo));
+    });
+  };
+}
+
 function todos(state = [], action) {
   switch (action.type) {
     case ADD_TODO:
@@ -94,6 +105,18 @@ function generateId() {
 }
 
 // Middleware code
+function thunk(store) {
+  return function(next) {
+    return function(action) {
+      if (typeof action === 'function') {
+        return action(store.dispatch);
+      }
+
+      return next(action);
+    };
+  };
+}
+
 function checker(store) {
   return function(next) {
     return function(action) {
@@ -147,6 +170,6 @@ const app = Redux.combineReducers({
   loading
 });
 
-const middlewares = Redux.applyMiddleware(checker, logger);
+const middlewares = Redux.applyMiddleware(thunk, checker, logger);
 
 const store = Redux.createStore(app, middlewares);
