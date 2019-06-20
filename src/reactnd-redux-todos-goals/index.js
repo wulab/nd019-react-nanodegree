@@ -78,6 +78,15 @@ function goals(state = [], action) {
   }
 }
 
+function loading(state = true, action) {
+  switch (action.type) {
+    case RECEIVE_DATA:
+      return false;
+    default:
+      return state;
+  }
+}
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -134,7 +143,8 @@ function logger(store) {
 // Main code
 const app = Redux.combineReducers({
   todos,
-  goals
+  goals,
+  loading
 });
 
 const middlewares = Redux.applyMiddleware(checker, logger);

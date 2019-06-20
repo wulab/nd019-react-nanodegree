@@ -148,7 +148,15 @@
         }
 
         render() {
-          const { todos, goals } = this.props.store.getState();
+          const { todos, goals, loading } = this.props.store.getState();
+
+          if (loading) {
+            return (
+              <div className="container">
+                <h1>Loading . . .</h1>
+              </div>
+            );
+          }
 
           return (
             <div className="container">
