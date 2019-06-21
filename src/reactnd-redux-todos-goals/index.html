@@ -45,13 +45,11 @@
           event.preventDefault();
 
           const { store } = this.props;
+          const todo = { name: this.input.value, complete: false };
 
-          API.saveTodo(this.input.value)
-            .then(todo => {
-              store.dispatch(addTodoAction(todo));
-              this.input.value = '';
-            })
-            .catch(() => alert('There was an error. Try again.'));
+          store.dispatch(
+            asyncAddTodoAction(todo, () => (this.input.value = ''))
+          );
         };
 
         removeTodo = (todo, event) => {
@@ -65,12 +63,7 @@
           event.preventDefault();
 
           const { store } = this.props;
-          store.dispatch(toggleTodoAction(todo));
-
-          API.saveTodoToggle(todo.id).catch(() => {
-            alert('An error occurred. Try again.');
-            store.dispatch(toggleTodoAction(todo));
-          });
+          store.dispatch(asyncToggleTodoAction(todo));
         };
 
         render() {
@@ -104,25 +97,18 @@
           event.preventDefault();
 
           const { store } = this.props;
+          const goal = { name: this.input.value };
 
-          API.saveGoal(this.input.value)
-            .then(goal => {
-              store.dispatch(addGoalAction(goal));
-              this.input.value = '';
-            })
-            .catch(() => alert('There was an error. Try again.'));
+          store.dispatch(
+            asyncAddGoalAction(goal, () => (this.input.value = ''))
+          );
         };
 
         removeGoal = (goal, event) => {
           event.preventDefault();
 
           const { store } = this.props;
-          store.dispatch(removeGoalAction(goal));
-
-          API.deleteGoal(goal.id).catch(() => {
-            alert('An error occurred. Try again.');
-            store.dispatch(addGoalAction(goal));
-          });
+          store.dispatch(asyncRemoveGoalAction(goal));
         };
 
         render() {

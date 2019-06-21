@@ -48,6 +48,17 @@ function receiveDataAction(data) {
   };
 }
 
+function asyncAddTodoAction(todo, callback) {
+  return function(dispatch) {
+    API.saveTodo(todo.name)
+      .then(todo => {
+        dispatch(addTodoAction(todo));
+        callback();
+      })
+      .catch(() => alert('There was an error. Try again.'));
+  };
+}
+
 function asyncRemoveTodoAction(todo) {
   return function(dispatch) {
     dispatch(removeTodoAction(todo));
@@ -55,6 +66,39 @@ function asyncRemoveTodoAction(todo) {
     API.deleteTodo(todo.id).catch(() => {
       alert('An error occurred. Try again.');
       dispatch(addTodoAction(todo));
+    });
+  };
+}
+
+function asyncToggleTodoAction(todo) {
+  return function(dispatch) {
+    dispatch(toggleTodoAction(todo));
+
+    API.saveTodoToggle(todo.id).catch(() => {
+      alert('An error occurred. Try again.');
+      dispatch(toggleTodoAction(todo));
+    });
+  };
+}
+
+function asyncAddGoalAction(goal, callback) {
+  return function(dispatch) {
+    API.saveGoal(goal.name)
+      .then(goal => {
+        dispatch(addGoalAction(goal));
+        callback();
+      })
+      .catch(() => alert('There was an error. Try again.'));
+  };
+}
+
+function asyncRemoveGoalAction(goal) {
+  return function(dispatch) {
+    dispatch(removeGoalAction(goal));
+
+    API.deleteGoal(goal.id).catch(() => {
+      alert('An error occurred. Try again.');
+      dispatch(addGoalAction(goal));
     });
   };
 }
