@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import List from './List';
 import {
   asyncAddTodoAction,
   asyncRemoveTodoAction,
   asyncToggleTodoAction
 } from '../actions/todos';
-import { StoreContext } from '../contexts/store';
+import { StoreContext } from '../context';
 
-class Todos extends React.Component {
+class Todos extends Component {
   static contextType = StoreContext;
 
   addTodo = event => {

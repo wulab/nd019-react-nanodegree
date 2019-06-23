@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import List from './List';
 import { asyncAddGoalAction, asyncRemoveGoalAction } from '../actions/goals';
-import { StoreContext } from '../contexts/store';
+import { StoreContext } from '../context';
 
-class Goals extends React.Component {
+class Goals extends Component {
   static contextType = StoreContext;
 
   addGoal = event => {

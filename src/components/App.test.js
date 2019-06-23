@@ -5,7 +5,7 @@ import App from './App';
 import { createStore } from 'redux';
 import middlewares from '../middlewares';
 import reducers from '../reducers';
-import { StoreContext } from '../contexts/store';
+import { StoreContext } from '../context';
 
 it('renders without crashing', () => {
   const store = createStore(reducers, middlewares);

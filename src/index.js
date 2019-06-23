@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import middlewares from './middlewares';
 import reducers from './reducers';
-import { StoreContext } from './contexts/store';
+import { StoreContext } from './context';
 
 const store = createStore(reducers, middlewares);
 

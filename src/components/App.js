@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Goals from './Goals';
 import Todos from './Todos';
 import { asyncReceiveDataAction } from '../actions/shared';
-import { StoreContext } from '../contexts/store';
+import { StoreContext } from '../context';
 
 class App extends Component {
   static contextType = StoreContext;
