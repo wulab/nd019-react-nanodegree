@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { StoreContext } from '../context';
+import { asyncReceiveData } from '../actions/shared';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="container">
-        <h3 className="center">Starter Code</h3>
-      </div>
-    );
-  }
+export default function App(props) {
+  const store = useContext(StoreContext);
+
+  useEffect(() => store.dispatch(asyncReceiveData()));
+
+  return (
+    <div className="container">
+      <h3 className="center">Starter Code</h3>
+    </div>
+  );
 }
-
-export default App;
