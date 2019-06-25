@@ -6,10 +6,10 @@ import * as serviceWorker from './serviceWorker';
 
 import { createStore } from 'redux';
 import middlewares from './middlewares';
-import reducers from './reducers';
+import reducer from './reducers';
 import { StoreContext } from './context';
 
-const store = createStore(reducers, middlewares);
+const store = createStore(reducer, middlewares);
 
 ReactDOM.render(
   <StoreContext.Provider value={store}>
