@@ -5,7 +5,7 @@ import Dashboard from './Dashboard';
 
 export default function App(props) {
   const store = useContext(StoreContext);
-  const { authUser, tweets } = store.getState();
+  const { authUser, tweets, users } = store.getState();
   const [, setState] = useState();
 
   useEffect(() => {
@@ -15,7 +15,9 @@ export default function App(props) {
 
   return (
     <div className="container">
-      {authUser !== null && <Dashboard tweets={tweets} />}
+      {authUser !== null && (
+        <Dashboard authUser={authUser} tweets={tweets} users={users} />
+      )}
     </div>
   );
 }
