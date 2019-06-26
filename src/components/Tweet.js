@@ -48,7 +48,7 @@ export default function Tweet(props) {
         </div>
         <div className="tweet-icons">
           <TiArrowBackOutline className="tweet-icon" />
-          <span>{replies !== 0 && replies}</span>
+          <span>{replies > 0 && replies}</span>
           <button className="heart-button" onClick={handleLike}>
             {hasLiked ? (
               <TiHeartFullOutline color="#e0245e" className="tweet-icon" />
@@ -56,7 +56,7 @@ export default function Tweet(props) {
               <TiHeartOutline className="tweet-icon" />
             )}
           </button>
-          <span>{likes !== 0 && likes}</span>
+          <span>{likes > 0 && likes}</span>
         </div>
       </div>
     </div>

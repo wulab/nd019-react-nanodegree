@@ -15,7 +15,9 @@ export default function App(props) {
 
   return (
     <div className="container">
-      {authUser !== null && (
+      {authUser === null ? (
+        <h3 className="center">Loading...</h3>
+      ) : (
         <Dashboard authUser={authUser} tweets={tweets} users={users} />
       )}
     </div>
