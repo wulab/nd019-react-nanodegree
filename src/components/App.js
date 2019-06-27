@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { StoreContext } from '../context';
 import { asyncReceiveData } from '../actions/shared';
 import Dashboard from './Dashboard';
+import NewTweet from './NewTweet';
 
 export default function App(props) {
   const store = useContext(StoreContext);
@@ -18,7 +19,8 @@ export default function App(props) {
       {authUser === null ? (
         <h3 className="center">Loading...</h3>
       ) : (
-        <Dashboard authUser={authUser} tweets={tweets} users={users} />
+        // <Dashboard authUser={authUser} tweets={tweets} users={users} />
+        <NewTweet />
       )}
     </div>
   );
