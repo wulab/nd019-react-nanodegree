@@ -22,11 +22,13 @@ export default function Dashboard(props) {
     <div>
       <h3 className="center">Your Timeline</h3>
       <ul>
-        {Object.keys(tweets).map(id => (
-          <li key={id}>
-            <Tweet authUser={authUser} tweet={getFormattedTweet(id)} />
-          </li>
-        ))}
+        {Object.keys(tweets)
+          .sort((a, b) => tweets[b].timestamp - tweets[a].timestamp)
+          .map(id => (
+            <li key={id}>
+              <Tweet authUser={authUser} tweet={getFormattedTweet(id)} />
+            </li>
+          ))}
       </ul>
     </div>
   );
