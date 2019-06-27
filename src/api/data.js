@@ -249,7 +249,7 @@ export function _getTweets() {
   });
 }
 
-export function _saveLikeToggle({ id, hasLiked, authedUser }) {
+export function _saveLikeToggle({ id, hasLiked, authUser }) {
   return new Promise((res, rej) => {
     setTimeout(() => {
       tweets = {
@@ -258,8 +258,8 @@ export function _saveLikeToggle({ id, hasLiked, authedUser }) {
           ...tweets[id],
           likes:
             hasLiked === true
-              ? tweets[id].likes.filter(uid => uid !== authedUser)
-              : tweets[id].likes.concat([authedUser])
+              ? tweets[id].likes.filter(uid => uid !== authUser)
+              : tweets[id].likes.concat([authUser])
         }
       };
 

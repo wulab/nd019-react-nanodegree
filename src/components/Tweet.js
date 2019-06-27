@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { StoreContext } from '../context';
+import { asyncToggleTweet } from '../actions/tweets';
 import { formatDate } from '../helpers/tweet';
 import {
   TiArrowBackOutline,
@@ -7,15 +9,18 @@ import {
 } from 'react-icons/ti';
 
 export default function Tweet(props) {
+  const store = useContext(StoreContext);
   const tweet = props.tweet;
 
   if (tweet === null) {
     return <div className="tweet" />;
   }
 
+  const { authUser } = store.getState();
   const {
     avatar,
     hasLiked,
+    id,
     likes,
     name,
     parent,
@@ -30,6 +35,7 @@ export default function Tweet(props) {
 
   function handleLike(event) {
     event.preventDefault();
+    store.dispatch(asyncToggleTweet({ id, hasLiked, authUser }));
   }
 
   return (
