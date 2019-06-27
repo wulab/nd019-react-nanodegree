@@ -1,10 +1,26 @@
 import { RECEIVE_DATA } from '../actions/shared';
-import { TOGGLE_TWEET } from '../actions/tweets';
+import { ADD_TWEET, TOGGLE_TWEET } from '../actions/tweets';
 
 export default function tweets(state = {}, action) {
   switch (action.type) {
     case RECEIVE_DATA:
       return action.tweets;
+    case ADD_TWEET:
+      let replyingTo = {};
+      let { tweet } = action;
+
+      if (tweet.replyingTo !== null) {
+        replyingTo[tweet.replyingTo] = {
+          ...state[tweet.replyingTo],
+          replies: state[tweet.replyingTo].replies.concat([tweet.id])
+        };
+      }
+
+      return {
+        ...state,
+        [tweet.id]: tweet,
+        ...replyingTo
+      };
     case TOGGLE_TWEET:
       return {
         ...state,

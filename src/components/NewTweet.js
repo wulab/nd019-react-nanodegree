@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { StoreContext } from '../context';
+import { asyncAddTweet } from '../actions/tweets';
 
 export default function NewTweet(props) {
   const [text, setText] = useState('');
+  const store = useContext(StoreContext);
   const MAX_LENGTH = 280;
   const remainingLength = MAX_LENGTH - text.length;
+  const { replyingTo } = props;
 
   function handleChange(event) {
     event.preventDefault();
@@ -13,7 +17,7 @@ export default function NewTweet(props) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    console.log('New Tweet:', text);
+    store.dispatch(asyncAddTweet({ text, replyingTo }));
     setText('');
   }
 

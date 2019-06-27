@@ -1,6 +1,14 @@
-import { saveLikeToggle } from '../api/tweet';
+import { saveLikeToggle, saveTweet } from '../api/tweet';
 
+export const ADD_TWEET = 'ADD_TWEET';
 export const TOGGLE_TWEET = 'TOGGLE_TWEET';
+
+export function addTweet(tweet) {
+  return {
+    type: ADD_TWEET,
+    tweet
+  };
+}
 
 export function toggleTweet({ id, authUser, hasLiked }) {
   return {
@@ -8,6 +16,18 @@ export function toggleTweet({ id, authUser, hasLiked }) {
     id,
     authUser,
     hasLiked
+  };
+}
+
+export function asyncAddTweet({ text, replyingTo }) {
+  return (dispatch, getState) => {
+    const { authUser } = getState();
+
+    saveTweet({
+      text,
+      replyingTo,
+      author: authUser
+    }).then(tweet => dispatch(addTweet(tweet)));
   };
 }
 
