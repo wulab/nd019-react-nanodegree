@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { StoreContext } from '../context';
 import { asyncToggleTweet } from '../actions/tweets';
-import { formatDate } from '../helpers/tweet';
+import { formatTweet, formatDate } from '../helpers/tweet';
 import {
   TiArrowBackOutline,
   TiHeartOutline,
@@ -10,24 +10,28 @@ import {
 
 export default function Tweet(props) {
   const store = useContext(StoreContext);
-  const tweet = props.tweet;
+  const { id } = props;
 
-  if (tweet === null) {
+  if (id === null) {
     return <div className="tweet" />;
   }
 
-  const { authUser } = store.getState();
+  const { authUser, users, tweets } = store.getState();
   const {
     avatar,
     hasLiked,
-    id,
     likes,
     name,
     parent,
     replies,
     text,
     timestamp
-  } = tweet;
+  } = formatTweet(
+    tweets[id],
+    users[tweets[id].author],
+    authUser,
+    tweets[tweets[id].replyingTo]
+  );
 
   function handleReplyingTo(event) {
     event.preventDefault();

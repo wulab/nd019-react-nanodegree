@@ -6,7 +6,7 @@ import NewTweet from './NewTweet';
 
 export default function App(props) {
   const store = useContext(StoreContext);
-  const { authUser, tweets, users } = store.getState();
+  const { authUser } = store.getState();
   const [, setState] = useState();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function App(props) {
       {authUser === null ? (
         <h3 className="center">Loading...</h3>
       ) : (
-        // <Dashboard authUser={authUser} tweets={tweets} users={users} />
+        // <Dashboard />
         <NewTweet />
       )}
     </div>
