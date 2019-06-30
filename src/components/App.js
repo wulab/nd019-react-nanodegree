@@ -3,7 +3,7 @@ import { StoreContext } from '../context';
 import { asyncReceiveData } from '../actions/shared';
 import Dashboard from './Dashboard';
 import NewTweet from './NewTweet';
-import TweetReply from './TweetReply';
+import TweetPage from './TweetPage';
 
 export default function App(props) {
   const store = useContext(StoreContext);
@@ -22,7 +22,7 @@ export default function App(props) {
       ) : (
         // <Dashboard />
         // <NewTweet />
-        <TweetReply replyingTo={'8xf0y6ziyjabvozdd253nd'} />
+        <TweetPage id={'8xf0y6ziyjabvozdd253nd'} />
       )}
     </div>
   );
