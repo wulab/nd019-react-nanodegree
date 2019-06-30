@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import { StoreContext } from '../context';
 import { asyncAddTweet } from '../actions/tweets';
 
 export default function NewTweet(props) {
   const [text, setText] = useState('');
+  const [redirectBack, setRedirectBack] = useState(false);
   const store = useContext(StoreContext);
   const MAX_LENGTH = 280;
   const remainingLength = MAX_LENGTH - text.length;
@@ -19,10 +21,18 @@ export default function NewTweet(props) {
 
     store.dispatch(asyncAddTweet({ text, replyingTo }));
     setText('');
+
+    if (replyingTo === undefined) {
+      setRedirectBack(true);
+    }
+  }
+
+  if (redirectBack) {
+    return <Redirect to="/" />;
   }
 
   return (
-    <div>
+    <Fragment>
       <h3 className="center">Compose New Tweet</h3>
       <form className="new-tweet" onSubmit={handleSubmit}>
         <textarea
@@ -39,6 +49,6 @@ export default function NewTweet(props) {
           Submit
         </button>
       </form>
-    </div>
+    </Fragment>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { StoreContext } from '../context';
 import { asyncToggleTweet } from '../actions/tweets';
 import { formatTweet, formatDate } from '../helpers/tweet';
@@ -8,15 +9,20 @@ import {
   TiHeartFullOutline
 } from 'react-icons/ti';
 
-export default function Tweet(props) {
+function Tweet(props) {
   const store = useContext(StoreContext);
-  const { id } = props;
+  const { authUser, users, tweets } = store.getState();
+  const { id, history } = props;
+  const tweet = tweets[id];
 
-  if (id === null) {
-    return <div className="tweet" />;
+  if (tweet === undefined) {
+    return (
+      <div className="tweet">
+        <div className="tweet-info">This Tweet doesn't exist.</div>
+      </div>
+    );
   }
 
-  const { authUser, users, tweets } = store.getState();
   const {
     avatar,
     hasLiked,
@@ -27,14 +33,15 @@ export default function Tweet(props) {
     text,
     timestamp
   } = formatTweet(
-    tweets[id],
-    users[tweets[id].author],
+    tweet,
+    users[tweet.author],
     authUser,
-    tweets[tweets[id].replyingTo]
+    tweets[tweet.replyingTo]
   );
 
   function handleReplyingTo(event) {
     event.preventDefault();
+    history.push(`/tweet/${parent.id}`);
   }
 
   function handleLike(event) {
@@ -43,7 +50,7 @@ export default function Tweet(props) {
   }
 
   return (
-    <div className="tweet">
+    <Link to={`/tweet/${id}`} className="tweet">
       <img src={avatar} alt={name} className="avatar" />
       <div className="tweet-info">
         <div>
@@ -69,6 +76,8 @@ export default function Tweet(props) {
           <span>{likes > 0 && likes}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
+
+export default withRouter(Tweet);

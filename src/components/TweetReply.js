@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { StoreContext } from '../context';
 import Tweet from './Tweet';
 import NewTweet from './NewTweet';
@@ -14,7 +14,7 @@ export default function TweetPage(props) {
       <Tweet id={replyingTo} />
       <NewTweet replyingTo={replyingTo} />
       {replies.length > 0 && (
-        <div>
+        <Fragment>
           <h3 className="center">Replies</h3>
           <ul>
             {replies
@@ -25,7 +25,7 @@ export default function TweetPage(props) {
                 </li>
               ))}
           </ul>
-        </div>
+        </Fragment>
       )}
     </div>
   );

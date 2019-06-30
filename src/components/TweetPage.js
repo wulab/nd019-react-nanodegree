@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import { StoreContext } from '../context';
 import Tweet from './Tweet';
 import NewTweet from './NewTweet';
@@ -6,15 +7,22 @@ import NewTweet from './NewTweet';
 export default function TweetPage(props) {
   const store = useContext(StoreContext);
   const { tweets } = store.getState();
-  const { id } = props;
-  const replies = tweets[id].replies;
+  const { id } = props.match.params;
+  const tweet = tweets[id];
+
+  if (tweet === undefined) {
+    alert("This Tweet doesn't exist.");
+    return <Redirect to="/" />;
+  }
+
+  const replies = tweet.replies;
 
   return (
-    <div>
+    <Fragment>
       <Tweet id={id} />
       <NewTweet replyingTo={id} />
       {replies.length > 0 && (
-        <div>
+        <Fragment>
           <h3 className="center">Replies</h3>
           <ul>
             {replies
@@ -25,8 +33,8 @@ export default function TweetPage(props) {
                 </li>
               ))}
           </ul>
-        </div>
+        </Fragment>
       )}
-    </div>
+    </Fragment>
   );
 }

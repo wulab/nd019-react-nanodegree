@@ -1,6 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { StoreContext } from '../context';
 import { asyncReceiveData } from '../actions/shared';
+import Nav from './Nav';
 import Dashboard from './Dashboard';
 import NewTweet from './NewTweet';
 import TweetPage from './TweetPage';
@@ -16,14 +18,19 @@ export default function App(props) {
   }, [store]);
 
   return (
-    <div className="container">
-      {authUser === null ? (
-        <h3 className="center">Loading...</h3>
-      ) : (
-        // <Dashboard />
-        // <NewTweet />
-        <TweetPage id={'8xf0y6ziyjabvozdd253nd'} />
-      )}
-    </div>
+    <BrowserRouter>
+      <div className="container">
+        {authUser === null ? (
+          <h3 className="center">Loading...</h3>
+        ) : (
+          <Fragment>
+            <Nav />
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/new" component={NewTweet} />
+            <Route path="/tweet/:id" component={TweetPage} />
+          </Fragment>
+        )}
+      </div>
+    </BrowserRouter>
   );
 }

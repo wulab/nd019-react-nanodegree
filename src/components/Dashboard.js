@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { StoreContext } from '../context';
 import Tweet from './Tweet';
 
@@ -7,7 +7,7 @@ export default function Dashboard(props) {
   const { tweets } = store.getState();
 
   return (
-    <div>
+    <Fragment>
       <h3 className="center">Your Timeline</h3>
       <ul>
         {Object.keys(tweets)
@@ -18,6 +18,6 @@ export default function Dashboard(props) {
             </li>
           ))}
       </ul>
-    </div>
+    </Fragment>
   );
 }
